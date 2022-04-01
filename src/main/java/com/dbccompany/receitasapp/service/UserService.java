@@ -42,7 +42,7 @@ public class UserService {
         log.info("Objeto DTO convertido para tipo Usuario.");
         u.setIsActive(true);
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
-        u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().toString()));
+        u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().getType()));
         return objectMapper.convertValue(userRepository.save(u), UserFormed.class);
     }
 

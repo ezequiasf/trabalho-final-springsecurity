@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum RoleType {
-    STANDARD(1), PREMIUM(2);
-    private final Integer type;
+    STANDARD("ROLE_STANDARD"), PREMIUM("ROLE_PREMIUM");
+    private final String type;
 }
