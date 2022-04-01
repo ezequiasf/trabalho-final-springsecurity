@@ -5,6 +5,7 @@ import com.dbccompany.receitasapp.dataTransfer.UserCreate;
 import com.dbccompany.receitasapp.dataTransfer.UserFormed;
 import com.dbccompany.receitasapp.dataTransfer.UserUpdate;
 import com.dbccompany.receitasapp.exceptions.ObjectNotFoundException;
+import com.dbccompany.receitasapp.exceptions.UserAlreadyExistsException;
 import com.dbccompany.receitasapp.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,7 +47,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),})
     @PostMapping("/saveUser")
     @Validated
-    public UserFormed saveUser(@Valid @RequestBody UserCreate userCreate) {
+    public UserFormed saveUser(@Valid @RequestBody UserCreate userCreate) throws UserAlreadyExistsException {
         return serviceUsuario.saveUser(userCreate);
     }
 

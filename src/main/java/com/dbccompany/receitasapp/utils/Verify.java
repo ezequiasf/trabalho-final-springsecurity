@@ -10,4 +10,5 @@ public class Verify {
             throw new UserNotActiveException("User inactive!");
         }
     }
+
 }

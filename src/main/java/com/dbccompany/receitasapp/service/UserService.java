@@ -5,6 +5,7 @@ import com.dbccompany.receitasapp.dataTransfer.UserFormed;
 import com.dbccompany.receitasapp.dataTransfer.UserUpdate;
 import com.dbccompany.receitasapp.entity.UserEntity;
 import com.dbccompany.receitasapp.exceptions.ObjectNotFoundException;
+import com.dbccompany.receitasapp.exceptions.UserAlreadyExistsException;
 import com.dbccompany.receitasapp.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +37,13 @@ public class UserService {
         return objectMapper.convertValue(u, UserFormed.class);
     }
 
-    public UserFormed saveUser(UserCreate userCreate) {
+    public UserFormed saveUser(UserCreate userCreate) throws UserAlreadyExistsException {
         log.info("Chamada de método service:: Salvar usuários.");
         UserEntity u = objectMapper.convertValue(userCreate, UserEntity.class);
         log.info("Objeto DTO convertido para tipo Usuario.");
+        if (userRepository.findByUserName(u.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("User already exists!");
+        }
         u.setIsActive(true);
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
         u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().getType()));
