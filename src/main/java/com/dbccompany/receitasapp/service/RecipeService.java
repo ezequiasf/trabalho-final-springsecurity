@@ -8,6 +8,7 @@ import com.dbccompany.receitasapp.entity.UserEntity;
 import com.dbccompany.receitasapp.exceptions.ObjectNotFoundException;
 import com.dbccompany.receitasapp.exceptions.UserNotActiveException;
 import com.dbccompany.receitasapp.repository.RecipeRepository;
+import com.dbccompany.receitasapp.utils.Verify;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,9 +39,7 @@ public class RecipeService {
         log.info("Chamada de método service:: Salvar receitas.");
         UserFormed userFormed = userService.findUserById(idUser);
         UserEntity userEntity = objectMapper.convertValue(userFormed, UserEntity.class);
-        if (!userEntity.getIsActive()) {
-            throw new UserNotActiveException("User inactive!");
-        }
+        Verify.userActivity(userEntity);
         RecipeEntity r = objectMapper.convertValue(recipeCreate, RecipeEntity.class);
         log.info("Objeto DTO convertido para tipo Receita.");
         r.setUserEntity(userEntity);
@@ -53,9 +52,7 @@ public class RecipeService {
         log.info("Chamada de método service:: Atualizar receitas.");
         RecipeEntity oldRecipe = recipeRepository.findById(idRecipe)
                 .orElseThrow(() -> new ObjectNotFoundException("Recipe not found!"));
-        if (!oldRecipe.getUserEntity().getIsActive()) {
-            throw new UserNotActiveException("User inactive!");
-        }
+        Verify.userActivity(oldRecipe.getUserEntity());
         RecipeEntity newRecipe = objectMapper.convertValue(recipeCreate, RecipeEntity.class);
         log.info("Objeto DTO convertido para tipo Receita.");
         oldRecipe.setRecipeName(newRecipe.getRecipeName());
@@ -69,10 +66,11 @@ public class RecipeService {
         return objectMapper.convertValue(recipeReturn, RecipeFormed.class);
     }
 
-    public void deleteRecipe(Long idRecipe) throws ObjectNotFoundException {
+    public void deleteRecipe(Long idRecipe) throws ObjectNotFoundException, UserNotActiveException {
         log.info("Chamada de método service:: Deletar receitas.");
         RecipeEntity recipeEntity = recipeRepository.findById(idRecipe).orElseThrow(() ->
                 new ObjectNotFoundException("Recipe not found!"));
+        Verify.userActivity(recipeEntity.getUserEntity());
         recipeRepository.delete(recipeEntity);
     }
 

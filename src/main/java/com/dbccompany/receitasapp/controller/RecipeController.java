@@ -65,7 +65,7 @@ public class RecipeController {
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),})
     @DeleteMapping("/deleteRecipe/{idRecipe}")
-    public void deleteRecipe(@PathVariable("idRecipe") Long idRecipe) throws ObjectNotFoundException {
+    public void deleteRecipe(@PathVariable("idRecipe") Long idRecipe) throws ObjectNotFoundException, UserNotActiveException {
         recipeService.deleteRecipe(idRecipe);
     }
 

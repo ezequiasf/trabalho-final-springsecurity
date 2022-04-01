@@ -9,6 +9,7 @@ import com.dbccompany.receitasapp.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final RoleService roleService;
 
     public List<UserFormed> readAllUsers() {
         return convertList(userRepository.findAll());
@@ -39,9 +41,9 @@ public class UserService {
         UserEntity u = objectMapper.convertValue(userCreate, UserEntity.class);
         log.info("Objeto DTO convertido para tipo Usuario.");
         u.setIsActive(true);
-        UserEntity u2 = userRepository.save(u);
-        log.info("Usuário salvo no repositório.");
-        return objectMapper.convertValue(u2, UserFormed.class);
+        u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
+        u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().toString()));
+        return objectMapper.convertValue(userRepository.save(u), UserFormed.class);
     }
 
     public UserFormed updateUser(UserUpdate userUpdate, Long idUser) throws ObjectNotFoundException {

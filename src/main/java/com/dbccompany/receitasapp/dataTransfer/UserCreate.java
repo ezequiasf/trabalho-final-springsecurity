@@ -1,5 +1,6 @@
 package com.dbccompany.receitasapp.dataTransfer;
 
+import com.dbccompany.receitasapp.entity.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,7 @@ public class UserCreate {
     @Email
     @NotBlank(message = "O email deve ser informado.")
     private String email;
+
+    @NotNull
+    private RoleType roleType;
 }
