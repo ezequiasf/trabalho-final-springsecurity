@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +50,7 @@ public class UserService {
                 .orElseThrow(() -> new ObjectNotFoundException("User not found!"));
         UserEntity newUser = objectMapper.convertValue(userUpdate, UserEntity.class);
         log.info("Objeto DTO convertido para tipo Usuario.");
-        oldUser.setUserName(newUser.getUserName());
+        oldUser.setUserName(newUser.getUsername());
         oldUser.setPassword(newUser.getPassword());
         oldUser.setEmail(newUser.getEmail());
         oldUser.setIsActive(newUser.getIsActive());
@@ -64,6 +65,10 @@ public class UserService {
         userEntity.setIsActive(false);
         userRepository.save(userEntity);
         log.info("Usúario desativado.");
+    }
+
+    public Optional<UserEntity> findUserByName (String name){
+        return userRepository.findByUserName(name);
     }
 
     private List<UserFormed> convertList(List<UserEntity> users) {
