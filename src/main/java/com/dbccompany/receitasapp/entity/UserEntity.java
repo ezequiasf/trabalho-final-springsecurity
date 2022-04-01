@@ -5,8 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -14,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "user_recipe")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_GEN")
     @SequenceGenerator(name = "USER_GEN", sequenceName = "seq_user", allocationSize = 1)
@@ -44,4 +49,44 @@ public class UserEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "userEntity")
     private Set<RecipeEntity> recipes;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "ROLE_ID")
+    private RoleEntity roleEntity;
+
+    //======= User details
+
+    @Override
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(roleEntity);
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    //====== Pode substituir propriedade acima
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
