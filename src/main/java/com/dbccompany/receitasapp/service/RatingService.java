@@ -6,7 +6,6 @@ import com.dbccompany.receitasapp.entity.RecipeEntity;
 import com.dbccompany.receitasapp.entity.UserEntity;
 import com.dbccompany.receitasapp.exceptions.ObjectNotFoundException;
 import com.dbccompany.receitasapp.repository.RatingRepository;
-import com.dbccompany.receitasapp.utils.Verify;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

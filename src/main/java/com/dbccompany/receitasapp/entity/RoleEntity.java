@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity (name = "ROLE")
+@Entity(name = "ROLE")
 public class RoleEntity implements Serializable, GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_ROLE")
@@ -27,6 +27,7 @@ public class RoleEntity implements Serializable, GrantedAuthority {
     @JsonIgnore
     @OneToMany(mappedBy = "roleEntity")
     private Set<UserEntity> userEntities;
+
     @Override
     public String getAuthority() {
         return this.getRoleName();

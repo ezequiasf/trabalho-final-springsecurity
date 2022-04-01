@@ -70,7 +70,7 @@ public class UserService {
         log.info("Usúario desativado.");
     }
 
-    public Optional<UserEntity> findUserByName (String name){
+    public Optional<UserEntity> findUserByName(String name) {
         return userRepository.findByUserName(name);
     }
 

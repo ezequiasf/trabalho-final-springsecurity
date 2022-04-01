@@ -25,7 +25,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable().and().cors()
                 .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/recipe/**", "/queryRecipe/**").hasAnyRole("STANDARD", "PREMIUM")
+                .antMatchers(HttpMethod.GET, "/recipe/**", "/queryRecipe/**", "/queryUser/**").hasAnyRole("STANDARD", "PREMIUM")
                 .antMatchers("/auth/**", "/user/**").permitAll()
                 .antMatchers("/**").hasRole("PREMIUM")
                 .anyRequest().authenticated()

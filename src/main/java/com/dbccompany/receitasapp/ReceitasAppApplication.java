@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 public class ReceitasAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReceitasAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ReceitasAppApplication.class, args);
+    }
 
 }

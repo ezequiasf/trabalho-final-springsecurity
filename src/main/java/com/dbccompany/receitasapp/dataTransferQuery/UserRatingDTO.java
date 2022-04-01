@@ -2,7 +2,10 @@ package com.dbccompany.receitasapp.dataTransferQuery;
 
 import com.dbccompany.receitasapp.dataTransfer.RatingFormed;
 import com.dbccompany.receitasapp.dataTransfer.UserUpdate;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
