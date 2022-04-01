@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,14 +19,14 @@ import java.io.Serializable;
 public class RoleEntity implements Serializable, GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_ROLE")
-    @SequenceGenerator(name = "GEN_ROLE", sequenceName = "SEQ_ROLE", allocationSize = 1)
-    @Column(name = "ROLE_ID")
+    @SequenceGenerator(name = "GEN_ROLE", sequenceName = "seq_role", allocationSize = 1)
+    @Column(name = "role_id")
     private Long roleId;
-    @Column(name = "ROLE_NAME")
+    @Column(name = "role_name")
     private String roleName;
     @JsonIgnore
-    @OneToOne(mappedBy = "roleEntity")
-    private UserEntity userEntity;
+    @OneToMany(mappedBy = "roleEntity")
+    private Set<UserEntity> userEntities;
     @Override
     public String getAuthority() {
         return this.getRoleName();

@@ -51,8 +51,8 @@ public class UserEntity implements UserDetails {
     private Set<RecipeEntity> recipes;
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "ROLE_ID")
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private RoleEntity roleEntity;
 
     //======= User details
@@ -66,7 +66,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.getUsername();
+        return userName;
     }
 
     @Override

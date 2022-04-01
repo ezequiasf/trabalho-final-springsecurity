@@ -43,7 +43,8 @@ public class UserService {
         u.setIsActive(true);
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
         u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().getType()));
-        return objectMapper.convertValue(userRepository.save(u), UserFormed.class);
+        UserEntity u2 = userRepository.save(u);
+        return objectMapper.convertValue(u2, UserFormed.class);
     }
 
     public UserFormed updateUser(UserUpdate userUpdate, Long idUser) throws ObjectNotFoundException {
