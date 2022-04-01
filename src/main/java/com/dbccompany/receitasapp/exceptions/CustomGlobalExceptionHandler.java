@@ -47,6 +47,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return badRequest(exception);
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleException(UserAlreadyExistsException exception,
+                                                  HttpServletRequest request) {
+        return badRequest(exception);
+    }
+
     @ExceptionHandler(UserNotActiveException.class)
     public ResponseEntity<Object> handleException(UserNotActiveException exception,
                                                   HttpServletRequest request) {
