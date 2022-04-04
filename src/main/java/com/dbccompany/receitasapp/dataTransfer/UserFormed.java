@@ -1,14 +1,14 @@
 package com.dbccompany.receitasapp.dataTransfer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class UserFormed extends UserUpdate {
-    private Integer idUser;
+@Getter
+@Setter
+@Builder
+public class UserFormed {
+    private Long idUser;
+
+    private String username;
 }
