@@ -14,6 +14,4 @@ public class UserFormed {
     private String username;
 
     private Boolean isActive;
-
-    private RoleType roleType;
 }
