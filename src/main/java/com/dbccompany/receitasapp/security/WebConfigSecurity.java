@@ -25,12 +25,14 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable().and().cors()
                 .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/recipe/**", "/queryRecipe/**", "/queryUser/**").hasAnyRole("STANDARD", "PREMIUM")
+                .antMatchers(HttpMethod.GET, "/recipe/**", "/queryRecipe/**"
+                        , "/queryUser/**").hasAnyRole("STANDARD", "PREMIUM")
                 .antMatchers("/auth/**", "/user/saveUser").permitAll()
                 .antMatchers("/user/**").hasAnyRole("PREMIUM", "STANDARD")
                 .antMatchers("/**").hasRole("PREMIUM")
                 .anyRequest().authenticated()
-                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService)
+                        , UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
