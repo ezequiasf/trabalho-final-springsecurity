@@ -48,10 +48,10 @@ public class UserService {
         }
         u.setIsActive(true);
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
-        RoleEntity role =roleService.findRoleByName(userCreate.getRoleType().getType());
-        if (role !=null){
+        RoleEntity role = roleService.findRoleByName(userCreate.getRoleType().getType());
+        if (role != null) {
             u.setRoleEntity(role);
-        }else{
+        } else {
             u.setRoleEntity(roleService.findRoleByName(RoleType.STANDARD.getType()));
         }
         UserEntity u2 = userRepository.save(u);
@@ -68,10 +68,10 @@ public class UserService {
         oldUser.setPassword(newUser.getPassword());
         oldUser.setEmail(newUser.getEmail());
         oldUser.setIsActive(newUser.getIsActive());
-        RoleEntity role =roleService.findRoleByName(userUpdate.getRoleType().getType());
-        if (role !=null){
+        RoleEntity role = roleService.findRoleByName(userUpdate.getRoleType().getType());
+        if (role != null) {
             oldUser.setRoleEntity(role);
-        }else{
+        } else {
             oldUser.setRoleEntity(roleService.findRoleByName(RoleType.STANDARD.getType()));
         }
         userRepository.save(oldUser);
