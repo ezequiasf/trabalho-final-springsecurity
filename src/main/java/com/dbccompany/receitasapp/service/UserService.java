@@ -3,6 +3,8 @@ package com.dbccompany.receitasapp.service;
 import com.dbccompany.receitasapp.dataTransfer.UserCreate;
 import com.dbccompany.receitasapp.dataTransfer.UserFormed;
 import com.dbccompany.receitasapp.dataTransfer.UserUpdate;
+import com.dbccompany.receitasapp.entity.RoleEntity;
+import com.dbccompany.receitasapp.entity.RoleType;
 import com.dbccompany.receitasapp.entity.UserEntity;
 import com.dbccompany.receitasapp.exceptions.ObjectNotFoundException;
 import com.dbccompany.receitasapp.exceptions.UserAlreadyExistsException;
@@ -46,7 +48,12 @@ public class UserService {
         }
         u.setIsActive(true);
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
-        u.setRoleEntity(roleService.findRoleByName(userCreate.getRoleType().getType()));
+        RoleEntity role =roleService.findRoleByName(userCreate.getRoleType().getType());
+        if (role !=null){
+            u.setRoleEntity(role);
+        }else{
+            u.setRoleEntity(roleService.findRoleByName(RoleType.STANDARD.getType()));
+        }
         UserEntity u2 = userRepository.save(u);
         return objectMapper.convertValue(u2, UserFormed.class);
     }
@@ -61,6 +68,12 @@ public class UserService {
         oldUser.setPassword(newUser.getPassword());
         oldUser.setEmail(newUser.getEmail());
         oldUser.setIsActive(newUser.getIsActive());
+        RoleEntity role =roleService.findRoleByName(userUpdate.getRoleType().getType());
+        if (role !=null){
+            oldUser.setRoleEntity(role);
+        }else{
+            oldUser.setRoleEntity(roleService.findRoleByName(RoleType.STANDARD.getType()));
+        }
         userRepository.save(oldUser);
         return objectMapper.convertValue(oldUser, UserFormed.class);
     }
