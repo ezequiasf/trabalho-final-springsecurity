@@ -1,5 +1,6 @@
 package com.dbccompany.receitasapp.dataTransfer;
 
+import com.dbccompany.receitasapp.entity.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,7 @@ public class UserUpdate {
 
     @NotNull
     private Boolean isActive;
+
+    @NotNull
+    private RoleType roleType;
 }
